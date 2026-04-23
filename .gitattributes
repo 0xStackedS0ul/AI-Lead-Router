@@ -1,2 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# .gitignore
+__pycache__/
+*.pyc
+.env
+data/*.db
+bot.log
