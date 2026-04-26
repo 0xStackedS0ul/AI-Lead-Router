@@ -1,12 +1,12 @@
 import sqlite3
 import os
+from core.notifier import send_telegram_alert
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 DB_PATH = os.path.join(DATA_DIR, 'leads.db')
 
 def init_db():
-    """Creates a database for storing leads, if one does not already exist."""
     os.makedirs(DATA_DIR, exist_ok=True)
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
@@ -23,7 +23,7 @@ def init_db():
             )
         ''')
         conn.commit()
-    print(f"[DB INFO] The lead database has been initialised.")
+    print(f"[DB INFO] База даних лідів ініціалізована.")
 
 def route_and_save_lead(raw_payload: dict, ai_analysis: dict) -> str:
     with sqlite3.connect(DB_PATH) as conn:
@@ -46,8 +46,9 @@ def route_and_save_lead(raw_payload: dict, ai_analysis: dict) -> str:
     urgency = ai_analysis.get("urgency")
 
     if is_qualified and urgency == "high":
-        return "URGENT_ALERT_REQUIRED" # For example, you can call up the Telegram bot here
+        send_telegram_alert(raw_payload, ai_analysis)
+        return "URGENT_ALERT_REQUIRED"
     elif is_qualified:
-        return "STANDARD_FOLLOWUP"     # Regular ice, send an email
+        return "STANDARD_FOLLOWUP"
     else:
-        return "DISCARD_OR_NURTURE"    # Misallocated funds or an insufficient budget
+        return "DISCARD_OR_NURTURE"

@@ -19,7 +19,7 @@ The JSON format must be strictly as follows:
     "intent": "short description in English",
     "budget": number (or null),
     "urgency": "low", "medium" або "high",
-    "is_qualified": true або false
+    "is_qualified": (BOOLEAN) Always "true" if a budget is specified and it is greater than 0; otherwise "false"
 }
 No further words or explanations.
 """

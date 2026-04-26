@@ -4,13 +4,10 @@ An event-driven Python microservice that acts as an intelligent webhook listener
 
 # // Core Features
 
-[WEBHOOK] Event Listener: FastAPI-based endpoint that continuously listens for incoming POST requests from external sources (e.g., Typeform, Make, n8n).
-
-[AI PARSER] Structured Extraction: Implements LLM logic to convert unstructured natural language into strictly formatted JSON, bypassing hallucination risks.
-
-[ROUTER] Decision Engine: Evaluates the qualified JSON payload against business logic to assign priority flags (e.g., URGENT_ALERT_REQUIRED).
-
-[STORAGE] Persistence: Automatically initializes and writes verified lead records into a local SQLite database.
+* **[WEBHOOK] Event Listener:** FastAPI-based endpoint that continuously listens for incoming POST requests from external sources (e.g., Typeform, Make, n8n).
+* **[AI PARSER] Structured Extraction:** Implements LLM logic to convert unstructured natural language into strictly formatted JSON, bypassing hallucination risks.
+* **[ROUTER] Decision Engine:** Evaluates the qualified JSON payload against business logic to assign priority flags (e.g., URGENT_ALERT_REQUIRED).
+* **[STORAGE] Persistence:** Automatically initializes and writes verified lead records into a local SQLite database.
 
 # // Project Architecture
 
@@ -28,28 +25,36 @@ An event-driven Python microservice that acts as an intelligent webhook listener
 * ├── main.py                # Level 0: FastAPI Server & Orchestrator
 * ├── test_webhook.py        # Client simulation script
 * └── README.md              # Project documentation
+```
 
+
+# [1] Clone the repository
 // Installation & Setup
-[1] Clone the repository
-git clone https://github.com/yourusername/ai-lead-router.git
+```
+git clone [https://github.com/yourusername/ai-lead-router.git](https://github.com/yourusername/ai-lead-router.git)
 cd ai-lead-router
-
-[2] Install dependencies
+```
+# [2] Install dependencies
 It is recommended to use a virtual environment (e.g., venv)
-pip install -r requirements.txt
 
-[3] Configure Environment Variables
+```
+pip install -r requirements.txt
+```
+# [3] Configure Environment Variables
 Create a .env file in the root directory and add your API credentials:
+```
+Code snippet
 GEMINI_API_KEY=your_gemini_key_here
 OPENAI_API_KEY=your_openai_key_here
-
-[4] Run the Pipeline
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_chat_id
+```
+# [4] Run the Pipeline
 Execute the FastAPI server:
+```
+Bash
 python main.py
-
-In a separate terminal, trigger the test webhook:
 python test_webhook.py
-
-// Future Improvements & Roadmap
-[TODO: NOTIFICATIONS] Connect the routing engine to a Telegram/Slack bot for real-time alerts on high-priority leads.
+```
+# // Future Improvements & Roadmap
 [TODO: AUTHENTICATION] Add an API key dependency to the FastAPI /webhook route to prevent unauthorized data injection.
